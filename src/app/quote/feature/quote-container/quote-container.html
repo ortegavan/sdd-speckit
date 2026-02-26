@@ -1,0 +1,6 @@
+<app-quote-card
+  [isLoading]="isLoading()"
+  [quote]="quote()"
+  [errorType]="errorType()"
+  (refreshClicked)="loadQuote()"
+/>

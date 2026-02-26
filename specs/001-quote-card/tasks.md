@@ -25,11 +25,11 @@ Cobrir `QuoteService` e `QuoteContainer`.
 
 **Objetivo**: Preparar infraestrutura de desenvolvimento antes de qualquer código de feature.
 
-- [ ] T001 Criar estrutura de pastas `src/app/quote/data/`, `src/app/quote/feature/quote-container/` e `src/app/quote/ui/quote-card/`
-- [ ] T002 [P] Criar `proxy.conf.json` na raiz com configuração `"/api" → "https://zenquotes.io"` (changeOrigin: true, secure: true) para resolver CORS em dev
-- [ ] T003 [P] Adicionar `"proxyConfig": "proxy.conf.json"` em `angular.json` na seção `architect.serve.options`
-- [ ] T004 [P] Adicionar `provideHttpClient()` nos providers de `src/app/app.config.ts`
-- [ ] T005 [P] Configurar estilos globais em `src/styles.scss`: importar fonte Outfit, aplicar `background: url('/background.jpg') center/cover no-repeat fixed` no body e centralizar com `display: flex; align-items: center; justify-content: center; min-height: 100vh`
+- [x] T001 Criar estrutura de pastas `src/app/quote/data/`, `src/app/quote/feature/quote-container/` e `src/app/quote/ui/quote-card/`
+- [x] T002 [P] Criar `proxy.conf.json` na raiz com configuração `"/api" → "https://zenquotes.io"` (changeOrigin: true, secure: true) para resolver CORS em dev
+- [x] T003 [P] Adicionar `"proxyConfig": "proxy.conf.json"` em `angular.json` na seção `architect.serve.options`
+- [x] T004 [P] Adicionar `provideHttpClient()` nos providers de `src/app/app.config.ts`
+- [x] T005 [P] Configurar estilos globais em `src/styles.scss`: importar fonte Outfit, aplicar `background: url('/background.jpg') center/cover no-repeat fixed` no body e centralizar com `display: flex; align-items: center; justify-content: center; min-height: 100vh`
 
 ---
 
@@ -39,9 +39,9 @@ Cobrir `QuoteService` e `QuoteContainer`.
 
 ⚠️ **CRÍTICO**: Nenhuma user story pode começar até esta fase estar completa.
 
-- [ ] T006 Criar modelos de domínio em `src/app/quote/data/quote.model.ts`: interfaces `ZenQuoteDto`, `Quote`, tipo `QuoteErrorType` (`'no-connection' | 'timeout' | 'server-error'`) e tipo discriminado `QuoteState` (`loading | success | error`)
-- [ ] T007 Criar `QuoteService` em `src/app/quote/data/quote.service.ts` injetando `HttpClient` via `inject()`, implementando `getRandomQuote(): Observable<Quote>` que chama `GET /api/random`, aplica `timeout(10_000)`, mapeia `ZenQuoteDto[]` para `Quote` (com fallback `'Autor desconhecido'` para autor vazio) e usa `catchError` para mapear erros para `QuoteErrorType` (`status === 0` → `'no-connection'`, `TimeoutError` → `'timeout'`, outros → `'server-error'`)
-- [ ] T008 Criar testes de `QuoteService` em `src/app/quote/data/quote.service.spec.ts` usando `HttpTestingController`: (1) resposta OK mapeia para `Quote` correto, (2) autor vazio retorna `'Autor desconhecido'`, (3) `status 0` resulta em `'no-connection'`, (4) `TimeoutError` resulta em `'timeout'`, (5) `status 500` resulta em `'server-error'`
+- [x] T006 Criar modelos de domínio em `src/app/quote/data/quote.model.ts`: interfaces `ZenQuoteDto`, `Quote`, tipo `QuoteErrorType` (`'no-connection' | 'timeout' | 'server-error'`) e tipo discriminado `QuoteState` (`loading | success | error`)
+- [x] T007 Criar `QuoteService` em `src/app/quote/data/quote.service.ts` injetando `HttpClient` via `inject()`, implementando `getRandomQuote(): Observable<Quote>` que chama `GET /api/random`, aplica `timeout(10_000)`, mapeia `ZenQuoteDto[]` para `Quote` (com fallback `'Autor desconhecido'` para autor vazio) e usa `catchError` para mapear erros para `QuoteErrorType` (`status === 0` → `'no-connection'`, `TimeoutError` → `'timeout'`, outros → `'server-error'`)
+- [x] T008 Criar testes de `QuoteService` em `src/app/quote/data/quote.service.spec.ts` usando `HttpTestingController`: (1) resposta OK mapeia para `Quote` correto, (2) autor vazio retorna `'Autor desconhecido'`, (3) `status 0` resulta em `'no-connection'`, (4) `TimeoutError` resulta em `'timeout'`, (5) `status 500` resulta em `'server-error'`
 
 **Checkpoint**: `ng test` passa com 5 casos de `QuoteService` — camada de dados pronta.
 
@@ -53,14 +53,14 @@ Cobrir `QuoteService` e `QuoteContainer`.
 
 **Teste Independente**: Abrir `http://localhost:4200` → redirect para `/home` → loading aparece → citação exibida com texto e autor. Sem nenhuma interação do usuário.
 
-- [ ] T009 [P] [US1] Criar `QuoteCard` em `src/app/quote/ui/quote-card/quote-card.ts` com `ChangeDetectionStrategy.OnPush`, inputs `isLoading = input.required<boolean>()`, `quote = input<Quote | null>(null)`, `errorType = input<QuoteErrorType | null>(null)` e output `refreshClicked = output<void>()`; importar `Quote` e `QuoteErrorType` de `quote.model.ts`
-- [ ] T010 [P] [US1] Criar template em `src/app/quote/ui/quote-card/quote-card.html` com três blocos condicionais: (1) loading: texto "Carregando..." visível, (2) sucesso `(@if !isLoading() && quote())`: exibir `quote().text` e `quote().author`, (3) erro `(@if !isLoading() && errorType())`: bloco de mensagem de erro (conteúdo detalhado em US3); botão "Refresh" com `(click)="refreshClicked.emit()"` e `[disabled]="isLoading()"` presente nos estados sucesso e erro
-- [ ] T011 [P] [US1] Criar estilos em `src/app/quote/ui/quote-card/quote-card.scss` conforme protótipo `specs/prototypes/quote-card.png`: card centralizado, hierarquia tipográfica (texto da citação em destaque, autor secundário), espaçamentos e estados visuais
-- [ ] T012 [US1] Criar `QuoteContainer` em `src/app/quote/feature/quote-container/quote-container.ts` com `state = signal<QuoteState>({ status: 'loading' })`, signals computados `isLoading = computed(() => this.state().status === 'loading')`, `quote = computed(() => ...)` e `errorType = computed(() => ...)`, método `loadQuote()` que define `state` para loading, assina `QuoteService.getRandomQuote()` com `takeUntilDestroyed()`, atualiza state para `success` ou `error` conforme resultado; chamar `loadQuote()` no construtor
-- [ ] T013 [US1] Criar template em `src/app/quote/feature/quote-container/quote-container.html` usando `<app-quote-card>` com bindings `[isLoading]="isLoading()"`, `[quote]="quote()"`, `[errorType]="errorType()"` e `(refreshClicked)="loadQuote()"`
-- [ ] T014 [US1] Criar estilos em `src/app/quote/feature/quote-container/quote-container.scss`
-- [ ] T015 [US1] Configurar rotas em `src/app/app.routes.ts`: adicionar `{ path: '', redirectTo: 'home', pathMatch: 'full' }` e `{ path: 'home', loadComponent: () => import('./quote/feature/quote-container/quote-container').then(m => m.QuoteContainer) }`
-- [ ] T016 [US1] Criar testes de US1 em `src/app/quote/feature/quote-container/quote-container.spec.ts`: (1) estado inicial é `loading`, (2) após sucesso estado é `success` com `quote`, (3) `isLoading()` é `false` após sucesso (anti-loading-infinito)
+- [x] T009 [P] [US1] Criar `QuoteCard` em `src/app/quote/ui/quote-card/quote-card.ts` com `ChangeDetectionStrategy.OnPush`, inputs `isLoading = input.required<boolean>()`, `quote = input<Quote | null>(null)`, `errorType = input<QuoteErrorType | null>(null)` e output `refreshClicked = output<void>()`; importar `Quote` e `QuoteErrorType` de `quote.model.ts`
+- [x] T010 [P] [US1] Criar template em `src/app/quote/ui/quote-card/quote-card.html` com três blocos condicionais: (1) loading: texto "Carregando..." visível, (2) sucesso `(@if !isLoading() && quote())`: exibir `quote().text` e `quote().author`, (3) erro `(@if !isLoading() && errorType())`: bloco de mensagem de erro (conteúdo detalhado em US3); botão "Refresh" com `(click)="refreshClicked.emit()"` e `[disabled]="isLoading()"` presente nos estados sucesso e erro
+- [x] T011 [P] [US1] Criar estilos em `src/app/quote/ui/quote-card/quote-card.scss` conforme protótipo `specs/prototypes/quote-card.png`: card centralizado, hierarquia tipográfica (texto da citação em destaque, autor secundário), espaçamentos e estados visuais
+- [x] T012 [US1] Criar `QuoteContainer` em `src/app/quote/feature/quote-container/quote-container.ts` com `state = signal<QuoteState>({ status: 'loading' })`, signals computados `isLoading = computed(() => this.state().status === 'loading')`, `quote = computed(() => ...)` e `errorType = computed(() => ...)`, método `loadQuote()` que define `state` para loading, assina `QuoteService.getRandomQuote()` com `takeUntilDestroyed()`, atualiza state para `success` ou `error` conforme resultado; chamar `loadQuote()` no construtor
+- [x] T013 [US1] Criar template em `src/app/quote/feature/quote-container/quote-container.html` usando `<app-quote-card>` com bindings `[isLoading]="isLoading()"`, `[quote]="quote()"`, `[errorType]="errorType()"` e `(refreshClicked)="loadQuote()"`
+- [x] T014 [US1] Criar estilos em `src/app/quote/feature/quote-container/quote-container.scss`
+- [x] T015 [US1] Configurar rotas em `src/app/app.routes.ts`: adicionar `{ path: '', redirectTo: 'home', pathMatch: 'full' }` e `{ path: 'home', loadComponent: () => import('./quote/feature/quote-container/quote-container').then(m => m.QuoteContainer) }`
+- [x] T016 [US1] Criar testes de US1 em `src/app/quote/feature/quote-container/quote-container.spec.ts`: (1) estado inicial é `loading`, (2) após sucesso estado é `success` com `quote`, (3) `isLoading()` é `false` após sucesso (anti-loading-infinito)
 
 **Checkpoint**: US1 completa e testável de forma independente — loading → citação exibida ✅
 
@@ -72,7 +72,7 @@ Cobrir `QuoteService` e `QuoteContainer`.
 
 **Teste Independente**: Com citação exibida, clicar em "Refresh" → loading aparece → botão desabilitado → nova citação exibida → botão reabilitado.
 
-- [ ] T017 [US2] Adicionar testes de US2 em `src/app/quote/feature/quote-container/quote-container.spec.ts`: (1) clicar Refresh com citação exibida → estado volta para `loading`, (2) `isLoading()` é `true` imediatamente após Refresh, (3) após Refresh bem-sucedido nova citação é exibida e `isLoading()` é `false`
+- [x] T017 [US2] Adicionar testes de US2 em `src/app/quote/feature/quote-container/quote-container.spec.ts`: (1) clicar Refresh com citação exibida → estado volta para `loading`, (2) `isLoading()` é `true` imediatamente após Refresh, (3) após Refresh bem-sucedido nova citação é exibida e `isLoading()` é `false`
 
 **Checkpoint**: US1 e US2 funcionam independentemente — Refresh troca citação, botão desabilita ✅
 
@@ -84,8 +84,8 @@ Cobrir `QuoteService` e `QuoteContainer`.
 
 **Teste Independente**: Simular falha de rede → mensagem "Sem conexão..." aparece → clicar Refresh → loading → (sucesso ou novo erro). Repetir para timeout e erro de servidor.
 
-- [ ] T018 [US3] Atualizar bloco de erro em `src/app/quote/ui/quote-card/quote-card.html` com mensagens diferenciadas por `errorType()`: `'no-connection'` → "Sem conexão com a internet. Verifique sua rede e tente novamente.", `'timeout'` → "O serviço demorou demais para responder. Tente novamente.", `'server-error'` → "O serviço está temporariamente indisponível. Tente mais tarde."
-- [ ] T019 [US3] Adicionar testes de US3 em `src/app/quote/feature/quote-container/quote-container.spec.ts`: (1) erro `status 0` → `state.errorType === 'no-connection'`, (2) `TimeoutError` → `state.errorType === 'timeout'`, (3) `status 500` → `state.errorType === 'server-error'`, (4) clicar Refresh após qualquer erro → estado volta para `loading`
+- [x] T018 [US3] Atualizar bloco de erro em `src/app/quote/ui/quote-card/quote-card.html` com mensagens diferenciadas por `errorType()`: `'no-connection'` → "Sem conexão com a internet. Verifique sua rede e tente novamente.", `'timeout'` → "O serviço demorou demais para responder. Tente novamente.", `'server-error'` → "O serviço está temporariamente indisponível. Tente mais tarde."
+- [x] T019 [US3] Adicionar testes de US3 em `src/app/quote/feature/quote-container/quote-container.spec.ts`: (1) erro `status 0` → `state.errorType === 'no-connection'`, (2) `TimeoutError` → `state.errorType === 'timeout'`, (3) `status 500` → `state.errorType === 'server-error'`, (4) clicar Refresh após qualquer erro → estado volta para `loading`
 
 **Checkpoint**: Todas as US funcionam de forma independente — erros com mensagens corretas e retry ✅
 
@@ -95,8 +95,8 @@ Cobrir `QuoteService` e `QuoteContainer`.
 
 **Objetivo**: Qualidade, acessibilidade e validação final.
 
-- [ ] T020 Verificar acessibilidade em `src/app/quote/ui/quote-card/quote-card.html` e `quote-card.ts`: adicionar `aria-live="polite"` na região de conteúdo dinâmico, garantir que o botão "Refresh" tenha `aria-label` descritivo, e que o indicador de loading seja legível por leitores de tela
-- [ ] T021 Executar checklist completo de `specs/001-quote-card/quickstart.md`: `ng test` (todos passam), `ng build` (sem erros), `ng serve` (fluxo principal: loading → citação → refresh → loading → citação)
+- [x] T020 Verificar acessibilidade em `src/app/quote/ui/quote-card/quote-card.html` e `quote-card.ts`: adicionar `aria-live="polite"` na região de conteúdo dinâmico, garantir que o botão "Refresh" tenha `aria-label` descritivo, e que o indicador de loading seja legível por leitores de tela
+- [x] T021 Executar checklist completo de `specs/001-quote-card/quickstart.md`: `ng test` (todos passam), `ng build` (sem erros), `ng serve` (fluxo principal: loading → citação → refresh → loading → citação)
 
 ---
 
