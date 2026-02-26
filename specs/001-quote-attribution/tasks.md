@@ -31,13 +31,13 @@ erro (simular falha de rede) e no estado de loading (inspecionar DOM antes da re
 
 > **NOTA: Escrever antes da implementação; verificar que FALHA antes de implementar T002 e T003**
 
-- [ ] T001 [P] [US1] Criar `src/app/quote/ui/quote-card/quote-card.spec.ts` com 7 cenários: (1) elemento `<a class="card__attribution">` renderiza; (2) texto é "Inspirational quotes provided by ZenQuotes API"; (3) `href` é "https://zenquotes.io"; (4) `target` é "_blank"; (5) `rel` é "noopener noreferrer"; (6) atribuição visível com `isLoading=true`; (7) atribuição visível com `errorType` definido
+- [x] T001 [P] [US1] Criar `src/app/quote/ui/quote-card/quote-card.spec.ts` com 7 cenários: (1) elemento `<a class="card__attribution">` renderiza; (2) texto é "Inspirational quotes provided by ZenQuotes API"; (3) `href` é "https://zenquotes.io"; (4) `target` é "_blank"; (5) `rel` é "noopener noreferrer"; (6) atribuição visível com `isLoading=true`; (7) atribuição visível com `errorType` definido
 
 ### Implementação para User Story 1
 
-- [ ] T002 [P] [US1] Adicionar `<a class="card__attribution" href="https://zenquotes.io" target="_blank" rel="noopener noreferrer">Inspirational quotes provided by ZenQuotes API</a>` ao final da div `.card` em `src/app/quote/ui/quote-card/quote-card.html`, após o bloco `@if (!isLoading())` do botão
+- [x] T002 [P] [US1] Adicionar `<a class="card__attribution" href="https://zenquotes.io" target="_blank" rel="noopener noreferrer">Inspirational quotes provided by ZenQuotes API</a>` ao final da div `.card` em `src/app/quote/ui/quote-card/quote-card.html`, após o bloco `@if (!isLoading())` do botão
 
-- [ ] T003 [P] [US1] Adicionar bloco `&__attribution` ao final do seletor `.card` em `src/app/quote/ui/quote-card/quote-card.scss`: `display: block`, `font-size: 0.7rem`, `color: #666`, `text-align: center`, `text-decoration: underline`, `text-underline-offset: 2px`; pseudo-classes `&:hover { color: #333 }` e `&:focus-visible { outline: 2px solid #1a1a1a; outline-offset: 2px; border-radius: 2px }`
+- [x] T003 [P] [US1] Adicionar bloco `&__attribution` ao final do seletor `.card` em `src/app/quote/ui/quote-card/quote-card.scss`: `display: block`, `font-size: 0.7rem`, `color: #666`, `text-align: center`, `text-decoration: underline`, `text-underline-offset: 2px`; pseudo-classes `&:hover { color: #333 }` e `&:focus-visible { outline: 2px solid #1a1a1a; outline-offset: 2px; border-radius: 2px }`
 
 **Checkpoint**: User Story 1 completa — atribuição visível nos 3 estados, link funcional, WCAG AA aprovado
 
@@ -47,8 +47,8 @@ erro (simular falha de rede) e no estado de loading (inspecionar DOM antes da re
 
 **Purpose**: Verificar conformidade com checklist do PR da constituição
 
-- [ ] T004 Executar `ng test` e confirmar que todos os testes passam (incluindo T001 se implementado)
-- [ ] T005 [P] Executar `ng build` e confirmar ausência de erros de compilação
+- [x] T004 Executar `ng test` e confirmar que todos os testes passam (incluindo T001 se implementado)
+- [x] T005 [P] Executar `ng build` e confirmar ausência de erros de compilação
 - [ ] T006 [P] Executar `ng serve`, inspecionar a tela nos 3 estados e confirmar visibilidade e contraste da atribuição
 
 ---
