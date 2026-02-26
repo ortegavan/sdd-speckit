@@ -1,0 +1,33 @@
+<div class="card">
+  @if (isLoading()) {
+    <div class="card__loading" aria-live="polite" aria-busy="true">
+      <span>Carregando...</span>
+    </div>
+  } @else if (quote()) {
+    <div class="card__content" aria-live="polite">
+      <blockquote class="card__quote">{{ quote()!.text }}</blockquote>
+      <p class="card__author">{{ quote()!.author }}</p>
+    </div>
+  } @else if (errorType()) {
+    <div class="card__error" aria-live="assertive" role="alert">
+      @if (errorType() === 'no-connection') {
+        <p>Sem conexão com a internet. Verifique sua rede e tente novamente.</p>
+      } @else if (errorType() === 'timeout') {
+        <p>O serviço demorou demais para responder. Tente novamente.</p>
+      } @else {
+        <p>O serviço está temporariamente indisponível. Tente mais tarde.</p>
+      }
+    </div>
+  }
+
+  @if (!isLoading()) {
+    <button
+      class="card__button"
+      type="button"
+      aria-label="Carregar nova citação"
+      (click)="refreshClicked.emit()"
+    >
+      Refresh
+    </button>
+  }
+</div>
