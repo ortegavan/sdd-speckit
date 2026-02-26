@@ -3,6 +3,7 @@
 Auto-generated from all feature plans. Last updated: 2026-02-26
 
 ## Active Technologies
+- TypeScript ~5.9 + Angular ^21.1, RxJS ~7.8 (001-quote-attribution)
 
 - Angular ^21.1 (standalone components, Signals, HttpClient, Router)
 - TypeScript ~5.9
@@ -44,6 +45,7 @@ ng build    # build de produção
 - Sem libs extras além das já instaladas
 
 ## Recent Changes
+- 001-quote-attribution: Added TypeScript ~5.9 + Angular ^21.1, RxJS ~7.8
 
 - **001-quote-card**: Quote Card — exibe citação aleatória (ZenQuotes), refresh, estados loading/erro/sucesso
 
