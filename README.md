@@ -1,59 +1,88 @@
-# SddSpeckit
+# ✨ Inspirational Quotes
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.3.
+Uma aplicação Angular minimalista que exibe citações inspiradoras aleatórias, com suporte a refresh e tratamento de erros.
 
-## Development server
+---
 
-To start a local development server, run:
+## 📖 Sobre
 
-```bash
-ng serve
-```
+Este projeto foi criado para ilustrar conceitos de **SDD (Spec-Driven Development)** em um toolkit de referência. Ele serve como exemplo didático de como desenvolver guiado por especificações, com uma arquitetura clara e separação de responsabilidades.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### O que a aplicação faz
 
-## Code scaffolding
+- **Exibe citações inspiradoras** vindas da ZenQuotes API
+- **Permite atualizar** a citação com um clique
+- **Trata erros** de forma elegante
+- **Interface responsiva** e acessível
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+A estrutura do código segue uma organização por features (`data`, `ui`, `feature`), demonstrando na prática os benefícios de Spec-Driven Development em aplicações Angular.
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 🚀 Como rodar
 
-```bash
-ng generate --help
-```
+### Pré-requisitos
 
-## Building
+- Node.js (v18+)
+- npm
 
-To build the project run:
+### Instalação e execução
 
 ```bash
-ng build
+# Instalar dependências
+npm install
+
+# Rodar em modo desenvolvimento
+npm start
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Acesse http://localhost:4200 no navegador.
 
-## Running unit tests
+---
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## 🛠️ Comandos úteis
 
-```bash
-ng test
+| Comando         | Descrição                          |
+| --------------- | ---------------------------------- |
+| `npm start`     | Sobe o servidor de desenvolvimento |
+| `npm run build` | Gera o build de produção           |
+| `npm test`      | Executa os testes unitários        |
+
+---
+
+## 📁 Stack
+
+- **Angular 21** (standalone components, Signals, HttpClient, Router)
+- **TypeScript ~5.9**
+- **RxJS ~7.8** para HTTP e reatividade
+- **Vitest ^4.0** para testes unitários headless
+- **ZenQuotes API** como fonte de citações
+
+---
+
+## 🗂️ Estrutura do projeto
+
+```text
+src/app/
+├── quote/
+│   ├── data/        # models, service (HttpClient)
+│   ├── feature/     # smart components (container)
+│   └── ui/          # dumb components (presentational, OnPush)
+├── app.config.ts    # providers globais (provideHttpClient, provideRouter)
+├── app.routes.ts    # rotas lazy-loaded
+└── styles.scss      # estilos e fonte globais (Outfit)
+
+specs/               # especificações SDD por feature
+public/              # assets estáticos (background.jpg, favicon.ico)
+proxy.conf.json      # proxy dev: /api → https://zenquotes.io
 ```
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## 📄 Medium
 
-```bash
-ng e2e
-```
+Este projeto acompanha um post no Medium sobre **Spec-Driven Development**. A aplicação serve como exemplo prático para os conceitos discutidos no artigo.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+_Feito com 💜 para demonstrar Spec-Driven Development_
